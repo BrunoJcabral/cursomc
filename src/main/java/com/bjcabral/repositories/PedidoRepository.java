@@ -1,11 +1,12 @@
 package com.bjcabral.repositories;
 
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.bjcabral.domain.Produto;
+import com.bjcabral.domain.Pedido;
 
 @Repository
-public interface ProdutoRepository extends JpaRepository<Produto, Integer>{
+public interface PedidoRepository extends JpaRepository<Pedido, Integer>{
 
 }

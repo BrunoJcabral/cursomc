@@ -3,11 +3,13 @@ package com.bjcabral.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.bjcabral.domain.Categoria;
 import com.bjcabral.repositories.CategoriaRepository;
 import com.bjcabral.resources.exception.MsgException;
+import com.bjcabral.services.exceptions.DataIntegrityException;
 import com.bjcabral.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -31,6 +33,17 @@ public class CategoriaService {
 	public Categoria update(Categoria categoria) {
 		findById(categoria.getId());
 		return repo.save(categoria);
+	}
+
+	public void delete(Integer id) {
+		findById(id);
+		try {
+			repo.deleteById(id);
+		}catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possivel deletar uma categoria que tem produtos associados!");
+		}
+		
+		
 	}
 
 }

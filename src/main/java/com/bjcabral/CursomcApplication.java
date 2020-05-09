@@ -62,6 +62,12 @@ public class CursomcApplication implements CommandLineRunner{
 		// TODO Auto-generated method stub
 		Categoria categoria1 = new Categoria(null, "informatica"); 
 		Categoria categoria2 = new Categoria(null, "escritorio"); 
+		Categoria categoria3 = new Categoria(null, "Cozinha"); 
+		Categoria categoria4 = new Categoria(null, "Cama, mesa e banho");
+		Categoria categoria5 = new Categoria(null, "Eletronicos"); 
+		Categoria categoria6 = new Categoria(null, "Sexyshop");
+		Categoria categoria7 = new Categoria(null, "jadinagem"); 
+		Categoria categoria8 = new Categoria(null, "lavanderia");
 		
 		Produto p1 = new Produto(null,"Computador", 2000.00);
 		Produto p2 = new Produto(null,"Impressora", 800.00);
@@ -74,7 +80,7 @@ public class CursomcApplication implements CommandLineRunner{
 		p2.getCategorias().addAll(Arrays.asList(categoria1,categoria2));
 		p3.getCategorias().add(categoria1);
 				
-		categoriaRepository.saveAll(Arrays.asList(categoria1,categoria2));
+		categoriaRepository.saveAll(Arrays.asList(categoria1,categoria2,categoria3,categoria4,categoria5,categoria6,categoria7,categoria8));
 		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
 
 		Estado est1 = new Estado(null, "Minas Gerais");

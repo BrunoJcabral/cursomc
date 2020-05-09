@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.bjcabral.domain.Categoria;
+import com.bjcabral.domain.convert.CategoriaConvert;
 import com.bjcabral.dto.CategoriaDTO;
 import com.bjcabral.services.CategoriaService;
 
@@ -25,6 +28,8 @@ public class CategoriaResource {
 
 	@Autowired
 	private CategoriaService service;
+	@Autowired
+	private CategoriaConvert categoriaConvert;
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
@@ -42,10 +47,10 @@ public class CategoriaResource {
 				.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok(listaCategoriaDTO);
 	}
+	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody Categoria categoria){
-		
-		categoria = service.insert(categoria);
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO categoriaDTO){
+		Categoria categoria = service.insert(categoriaConvert.dtoToClass(categoriaDTO));
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(categoria.getId()).toUri();
 		
@@ -53,9 +58,10 @@ public class CategoriaResource {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody Categoria categoria, @PathVariable Integer id ){
-		categoria.setId(id);
-		categoria = service.update(categoria);
+	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO categoriaDTO, @PathVariable Integer id ){
+		
+		categoriaDTO.setId(id);
+		service.update(categoriaConvert.dtoToClass(categoriaDTO));
 		
 		return ResponseEntity.noContent().build();
 	}

@@ -2,6 +2,11 @@ package com.bjcabral.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
 import com.bjcabral.domain.Categoria;
 
 public class CategoriaDTO implements Serializable{
@@ -9,6 +14,10 @@ public class CategoriaDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
+	
+	@NotBlank(message = "Preenchimento obrigatório!")
+	@NotEmpty(message = "Preenchimento obrigatório!")
+	@Length(min = 5,max = 80, message = "Tamanho do nome deve estar entre 5 e 80 caracteres!" )
 	private String nome;
 	
 	public CategoriaDTO() {}

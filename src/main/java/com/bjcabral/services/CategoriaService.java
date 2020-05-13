@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.bjcabral.domain.Categoria;
+import com.bjcabral.domain.Cliente;
 import com.bjcabral.repositories.CategoriaRepository;
 import com.bjcabral.resources.exception.MsgException;
 import com.bjcabral.services.exceptions.DataIntegrityException;
@@ -35,8 +36,10 @@ public class CategoriaService {
 	}
 
 	public Categoria update(Categoria categoria) {
-		findById(categoria.getId());
-		return repo.save(categoria);
+
+		Categoria categoriaUpdated = findById(categoria.getId());
+		categoriaUpdated.setNome(categoria.getNome());
+		return repo.save(categoriaUpdated);
 	}
 
 	public void delete(Integer id) {

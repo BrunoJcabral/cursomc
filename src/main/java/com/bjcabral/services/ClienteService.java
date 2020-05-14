@@ -9,10 +9,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bjcabral.domain.Cliente;
-import com.bjcabral.domain.Cliente;
 import com.bjcabral.repositories.ClienteRepository;
+import com.bjcabral.repositories.EnderecoRepository;
 import com.bjcabral.resources.exception.MsgException;
 import com.bjcabral.services.exceptions.DataIntegrityException;
 import com.bjcabral.services.exceptions.ObjectNotFoundException;
@@ -22,6 +23,8 @@ public class ClienteService {
 
 	@Autowired
 	private ClienteRepository repo;
+	@Autowired
+	private EnderecoRepository enderecoRepositorio;
 
 	public Cliente findById(Integer id) {
 		Optional<Cliente> obj = repo.findById(id);
@@ -29,9 +32,11 @@ public class ClienteService {
 				MsgException.NOT_FOUND + "ID: " + id + "| Tipo: " + Cliente.class.getName()));
 	}
 
-	public Cliente insert(Cliente dtoToClass) {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional
+	public Cliente insert(Cliente cliente) {
+		 repo.save(cliente);
+		 enderecoRepositorio.saveAll(cliente.getEnderecos());
+		 return cliente;
 	}
 
 	public Cliente update(Cliente cliente) {

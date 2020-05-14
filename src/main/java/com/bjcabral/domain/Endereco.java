@@ -22,6 +22,7 @@ public class Endereco implements Serializable{
 	private String numero;
 	private String Complemento;
 	private String Bairro;
+	private String cep;
 	
 	@ManyToOne
 	@JoinColumn(name = "cidade_id")
@@ -42,8 +43,9 @@ public class Endereco implements Serializable{
 		this.id = id;
 		this.logradouro = logradouro;
 		this.numero = numero;
-		Complemento = complemento;
-		Bairro = bairro;
+		this.Complemento = complemento;
+		this.Bairro = bairro;
+		this.cep =  cep;
 		this.cidade = cidade;
 		this.cliente = cliente;
 	}
@@ -102,6 +104,16 @@ public class Endereco implements Serializable{
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+	
+	
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 
 	@Override

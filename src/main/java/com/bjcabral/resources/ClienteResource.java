@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.bjcabral.domain.Cliente;
 import com.bjcabral.domain.convert.ClienteConvert;
 import com.bjcabral.dto.ClienteDTO;
+import com.bjcabral.dto.ClienteNewDTO;
 import com.bjcabral.services.ClienteService;
 
 @RestController
@@ -39,10 +40,10 @@ public class ClienteResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO clienteDTO){
-		Cliente categoria = service.insert(clienteConvert.dtoToClass(clienteDTO));
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO clienteDTO){
+		Cliente cliente = service.insert(clienteConvert.dtoToClass(clienteDTO));
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}").buildAndExpand(categoria.getId()).toUri();
+				.path("/{id}").buildAndExpand(cliente.getId()).toUri();
 		
 		return ResponseEntity.created(uri).build();
 	}
